@@ -2,24 +2,42 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Homepage;
+use App\Models\Portfolio;
 use Illuminate\Http\Request;
+use App\Models\ServiceSection;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class WeddingController extends Controller
 {
-    public function index() 
+    public function index()
     {
-        $portfolio = DB::table('events')
-            ->where('is_active', true)
-            ->get();
+        $homepage = Homepage::with(['images' => function ($q) {
+            $q->orderBy('sort_order');
+        }])->first();
 
-        $clients = DB::table('client_events')
-            ->where('is_active', true)
-            ->get();
+        $identity = DB::table('identities')->first();
 
-        $settings = DB::table('website_settings')->first();
+        // $services = DB::table('services')->first();
 
-        return view('new_index', compact('settings'));
+        $serviceSection = ServiceSection::with(['services' => function ($q) {
+            $q->orderBy('sort_order');
+        }])->first();
+
+        $portfolio = Portfolio::with('images')->first();
+
+        $platform = DB::table('platforms')->first();
+
+        $settings = DB::table('website_settings_wo')->first();
+
+        return view('new_index', compact(
+            'homepage',
+            'identity',
+            'serviceSection',
+            'portfolio',
+            'platform',
+            'settings',
+        ));
     }
 }

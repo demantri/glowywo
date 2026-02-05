@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="id">
 {{-- Update test --}}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Glowy WO | Wedding Organizer</title>
 
-    <link rel="icon" href="{{ asset('wedding/logo/glowy-favicon.png') }}" type="image/png">
+    <link rel="icon" href="{{ env('APP_ADMIN') . '/storage/' . $settings->favicon }}" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link
         href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=BBH+Bogle&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
@@ -45,40 +46,15 @@
         </div>
     </nav>
 
-    {{-- <section id="home" class="hero p-0">
-        <div class="container text-center" data-aos="fade-up">
-            <span class="decorator-text">Elegance in</span>
-            <h1 class="display-huge">EVERY DETAIL</h1>
-            <p class="lead-hero mb-5">Wujudkan kemewahan pernikahan
-                <br>
-                <span>impian bersama Glowy WO.</span>
-            </p>
-
-            <div class="glass-button-container d-inline-flex gap-3">
-                <a href="#profile" id="btn-scroll" class="btn btn-burgundy-scroll rounded-pill px-5">
-                    <i class="bi bi-arrow-down"></i> Scroll
-                </a>
-
-                <button class="btn btn-white-video rounded-pill px-4" data-bs-toggle="modal"
-                    data-bs-target="#videoModal">
-                    <i class="bi bi-play-circle-fill"></i> Watch Video
-                </button>
-            </div>
-        </div>
-    </section> --}}
-
     <section id="home" class="hero position-relative overflow-hidden p-0">
-
         <!-- Background Carousel -->
         <div id="heroCarousel" class="carousel slide hero-bg" data-bs-ride="carousel" data-bs-interval="5000">
-
             <div class="carousel-inner">
-                <div class="carousel-item active" style="background-image: url('{{ asset('assets/bg_hero.svg') }}');">
-                </div>
-
-                <div class="carousel-item" style="background-image: url('{{ asset('wedding/hero.jpg') }}');"></div>
-
-                <div class="carousel-item" style="background-image: url('{{ asset('wedding/img-2.jpg') }}');"></div>
+                @foreach ($homepage->images as $index => $image)
+                    <div class="carousel-item {{ $index === 0 ? 'active' : '' }}"
+                        style="background-image: url('{{ env('APP_ADMIN') . '/storage/' . $image->image_path }}');">
+                    </div>
+                @endforeach
             </div>
         </div>
 
@@ -141,16 +117,7 @@
                 <!-- Description Box -->
                 <div class="col-lg-5 mt-4 mt-lg-0" data-aos="fade-left">
                     <div class="identity-box">
-                        <p>
-                            <strong>Glowy</strong> hadir sebagai partner yang mendampingi setiap perjalanan menuju hari
-                            bahagia setiap pasangan. Kami akan terus bertumbuh bersama setiap calon pasangan dan menjaga
-                            kepercayaan serta komitmen kami kepada setiap calon pengantin.
-                        </p>
-                        <p>
-                            Glowy menghadirkan konsep yang orisinal dan personal serta didukung dengan kerja profesional
-                            dan youthful spirit, kami merancang setiap pernikahan dengan sepenuh hati, hangat,
-                            terkonsep, dan berkesan.
-                        </p>
+                        {!! $identity->subtitle !!}
                     </div>
                 </div>
 
@@ -160,7 +127,6 @@
 
     <section id="services" class="services-section">
         {{-- <div class="services-overlay"></div> --}}
-
         <div class="container position-relative">
             <div class="text-center services-header mb-7" data-aos="fade-up">
                 <h2 class="section-title">
@@ -168,57 +134,38 @@
                     <span class="bold-text">Services</span>
                 </h2>
                 <p class="services-subtitle mx-auto">
-                    Kami menyediakan berbagai layanan profesional untuk memastikan setiap tahap
-                    pernikahan Anda berjalan dengan sempurna.
+                    {{ $serviceSection->subtitle }}
                 </p>
             </div>
 
             <div class="row g-4 justify-content-center align-items-stretch">
-                <!-- kiri -->
-                <div class="col-md-4" data-aos="fade-right" data-aos-delay="100">
-                    <div class="service-card shadow-sm text-center h-100">
-                        <div class="service-icon">
-                            <i class="bi bi-calendar-heart"></i>
-                        </div>
-                        <h4>Wedding Planner</h4>
-                        <p class="text-muted small">
-                            Wujudkan pernikahan impian bersama Glowy. Kami tangani konsep, budget,
-                            hingga koordinasi vendor secara profesional agar acara berjalan rapi
-                            dan terkendali.
-                        </p>
-                    </div>
-                </div>
+                @foreach ($serviceSection->services as $index => $service)
+                    <div class="col-md-4"
+                        data-aos="{{ $index === 0 ? 'fade-right' : ($index === 1 ? 'zoom-in' : 'fade-left') }}"
+                        data-aos-delay="{{ ($index + 1) * 100 }}">
 
-                <!-- tengah -->
-                <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="service-card service-featured text-center h-100">
-                        <div class="badge-featured">Recommended</div>
-                        <div class="service-icon shadow">
-                            <i class="bi bi-gift-fill"></i>
-                        </div>
-                        <h4>All In Package</h4>
-                        <p class="small">
-                            Solusi praktis pernikahan elegan tanpa ribet.
-                            Semua kebutuhan sudah tersedia dalam satu paket lengkap.
-                        </p>
-                    </div>
-                </div>
+                        <div
+                            class="service-card {{ $service->is_recommend ? 'service-featured' : 'shadow-sm' }} text-center h-100">
+                            @if ($service->is_recommend)
+                                <div class="badge-featured">Recommended</div>
+                            @endif
 
-                <!-- kanan -->
-                <div class="col-md-4" data-aos="fade-left" data-aos-delay="300">
-                    <div class="service-card shadow-sm text-center h-100">
-                        <div class="service-icon">
-                            <i class="bi bi-clock-history"></i>
+                            <div class="service-icon {{ $service->is_recommend ? 'shadow' : '' }}">
+                                <i class="{{ $service->icon }}"></i>
+                            </div>
+
+                            <h4>{{ $service->title }}</h4>
+
+                            <p class="text-muted small">
+                                {{ $service->description }}
+                            </p>
+
                         </div>
-                        <h4>Wedding On The Day</h4>
-                        <p class="text-muted small">
-                            Sudah menyiapkan semuanya sendiri?
-                            Glowy hadir untuk memastikan hari pernikahan berjalan lancar tanpa kendala.
-                        </p>
                     </div>
-                </div>
+                @endforeach
 
             </div>
+
         </div>
     </section>
 
@@ -232,9 +179,7 @@
                     <span class="bold-text">Portfolio</span>
                 </h2>
                 <p class="portfolio-desc">
-                    Setiap pasangan memiliki kisah cinta yang unik dan istimewa.
-                    Glowy ingin berbagi momen-momen bahagia yang telah kami dampingi
-                    dan rancang dengan sepenuh hati
+                    {{ $portfolio->subtitle }}
                 </p>
             </div>
 
@@ -271,31 +216,14 @@
             <div id="portfolioSplide" class="splide portfolio-splide">
                 <div class="splide__track">
                     <ul class="splide__list">
-
-                        <li class="splide__slide">
-                            <div class="portfolio-slide">
-                                <img src="{{ asset('wedding/portfolio/img-1.jpg') }}" alt="Wedding Portfolio">
-                            </div>
-                        </li>
-
-                        <li class="splide__slide">
-                            <div class="portfolio-slide">
-                                <img src="{{ asset('wedding/portfolio/img-2.jpg') }}" alt="Wedding Portfolio">
-                            </div>
-                        </li>
-
-                        <li class="splide__slide">
-                            <div class="portfolio-slide">
-                                <img src="{{ asset('wedding/portfolio/img-3.jpg') }}" alt="Wedding Portfolio">
-                            </div>
-                        </li>
-
-                        <li class="splide__slide">
-                            <div class="portfolio-slide">
-                                <img src="{{ asset('wedding/portfolio/img-4.jpg') }}" alt="Wedding Portfolio">
-                            </div>
-                        </li>
-
+                        @foreach ($portfolio->images as $image)
+                            <li class="splide__slide">
+                                <div class="portfolio-slide">
+                                    <img src="{{ env('APP_ADMIN') . '/storage/' . $image->image_path }}"
+                                        alt="Wedding Portfolio">
+                                </div>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -313,14 +241,15 @@
                             <span class="bold-text">Platform</span>
                         </h2>
                         <p class="contact-desc">
-                            Konsultasikan rencana pernikahan kamu, kami siap mendampingi.
-                            Hubungi Glowy sekarang!
+                            {{ $platform->subtitle }}
                         </p>
                         <a href="#contact-form" class="btn btn-contact">Contact</a>
                     </div>
 
                     <div class="col-lg-4 d-none d-lg-block text-end model-wrapper">
-                        <img src="{{ asset('assets/bg_talent.svg') }}" alt="Glowy Consultant" class="contact-model">
+                        {{-- <img src="{{ asset('assets/bg_talent.svg') }}" alt="Glowy Consultant" class="contact-model"> --}}
+                        <img src="{{ env('APP_ADMIN') . '/storage/' . $platform->image_path }}"
+                            alt="Glowy Consultant" class="contact-model">
                     </div>
                 </div>
             </div>
@@ -336,16 +265,15 @@
                         <ul class="office-list">
                             <li>
                                 <i class="bi bi-geo-alt-fill"></i>
-                                Jl. TB Simatupang No. Kav 17, Cilandak Barat,
-                                Cilandak District, South Jakarta 12430, Indonesia
+                                {{ $settings->address }}
                             </li>
                             <li>
                                 <i class="bi bi-telephone-fill"></i>
-                                +62 813 2069 714
+                                {{ $settings->whatsapp }}
                             </li>
                             <li>
                                 <i class="bi bi-envelope-fill"></i>
-                                info@glowy.co.id
+                                {{ $settings->email }}
                             </li>
                         </ul>
 
@@ -398,11 +326,10 @@
                 <div class="col-md-4 mb-4">
                     <h3 class="footer-brand">GLOWY WO</h3>
                     <p class="footer-desc">
-                        Professional event management company specializing in corporate events,
-                        brand activations, and MICE programs since 2015.
+                        {{ $settings->subtitle }}
                     </p>
                     <p class="footer-tagline">
-                        Growing Together, Glowing Forever!
+                        {{ $settings->tagline }}
                     </p>
                 </div>
 
@@ -428,7 +355,8 @@
                         <a href="#"><i class="bi bi-youtube"></i></a>
                     </div>
 
-                    <img src="{{ asset('wedding/logo/glowywo2.png') }}" alt="Glowy Logo" class="footer-logo">
+                    <img src="{{ env('APP_ADMIN') . '/storage/' . $settings->logo }}" alt="Glowy Logo"
+                        class="footer-logo">
                 </div>
 
             </div>
@@ -436,7 +364,7 @@
             <div class="footer-divider"></div>
 
             <p class="footer-copy">
-                © 2015 PT. GLOWYEO KARYA INOVASI. All Rights Reserved.
+                © 2015 {{ $settings->company_name }}. All Rights Reserved.
             </p>
         </div>
     </footer>
