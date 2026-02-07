@@ -1028,3 +1028,260 @@ section {
     font-size: 0.8rem;
     color: rgba(255, 255, 255, 0.6);
 }
+
+@media (max-width: 1440px) {
+    .services-section {
+        height: auto !important;
+    }
+
+    .portfolio-section {
+        height: auto !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    .display-huge {
+        font-size: 72px;
+        letter-spacing: 3px;
+    }
+
+    .decorator-text {
+        font-size: 72px;
+        margin-bottom: -40px;
+    }
+
+    .lead-hero {
+        font-size: 24px;
+    }
+
+    .hero {
+        /* height: 85vh; */
+        text-align: center;
+    }
+
+    .hero-content {
+        margin-top: 4rem !important;
+    }
+
+    .section-title {
+        font-size: 48px;
+    }
+
+    .identity-box {
+        padding: 30px;
+    }
+
+    .identity-box p {
+        font-size: 13px !important;
+    }
+
+    .services-section {
+        height: auto;
+        padding: 120px 0;
+    }
+
+    .services-subtitle {
+        font-size: 16px !important;
+    }
+
+    .portfolio-desc {
+        font-size: 16px !important;
+    }
+
+    .contact-title {
+        font-size: 42px;
+    }
+
+    .contact-model {
+        height: 320px;
+    }
+}
+
+/* =====================================================
+   2. MEDIUM TABLET (768px - 991px)
+   (Versi Tab seperti iPad atau Tablet Android)
+===================================================== */
+@media (max-width: 991px) {
+
+    section {
+        padding: 80px 0;
+    }
+
+    .navbar {
+        background: rgba(0,0,0,0.6) !important;
+        backdrop-filter: blur(10px);
+    }
+
+    .nav-link {
+        font-size: 16px;
+        margin-right: 0;
+        padding: 10px 0;
+    }
+
+    .display-huge {
+        font-size: 60px;
+        letter-spacing: 2px;
+    }
+
+    .decorator-text {
+        font-size: 56px;
+        margin-bottom: -30px;
+    }
+
+    .lead-hero {
+        font-size: 22px;
+    }
+
+    .our-identity-section {
+        height: auto;
+        padding: 120px 0;
+    }
+
+    .services-section {
+        height: auto;
+    }
+
+    .service-featured {
+        transform: scale(1);
+    }
+
+    .portfolio-title {
+        font-size: 32px;
+    }
+
+    .contact-cta {
+        padding: 40px;
+    }
+
+    .contact-model {
+        display: none;
+    }
+}
+
+/* =====================================================
+   3. MOBILE VERSION (Di bawah 768px)
+   (Penyesuaian khusus untuk Handphone)
+===================================================== */
+@media (max-width: 768px) {
+
+    .display-huge {
+        font-size: 42px;
+        letter-spacing: 1px;
+    }
+
+    .decorator-text {
+        font-size: 42px;
+        margin-bottom: -20px;
+    }
+
+    .lead-hero {
+        font-size: 18px;
+    }
+
+    .hero {
+        /* height: 85vh; */
+        text-align: center;
+    }
+
+    .hero-content {
+        margin-top: 6rem !important;
+    }
+
+    .section-title {
+        font-size: 36px;
+        text-align: center;
+    }
+
+    .identity-box {
+        padding: 25px;
+    }
+
+    .service-icon {
+        width: 48px !important;
+        height: 48px !important;
+    }
+
+    .service-card h4 {
+        font-size: 16px !important;
+    }
+
+    .service-card , p .text-muted {
+        font-size: 14px !important;
+    }
+
+    .service-card {
+        padding: 30px 20px;
+    }
+
+    .services-subtitle {
+        font-size: 14px !important;
+    }
+
+    .portfolio-desc {
+        font-size: 14px !important;
+    }
+
+    .portfolio-slide img {
+        height: 240px;
+    }
+
+    .contact-title {
+        font-size: 32px;
+    }
+
+    .contact-desc {
+        font-size: 14px;
+    }
+
+    .contact-form-box {
+        padding: 30px;
+    }
+
+    .footer-brand {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 425px) {
+
+    .display-huge {
+        font-size: 32px;
+    }
+
+    .decorator-text {
+        font-size: 28px;
+        letter-spacing: 2px;
+    }
+
+    .lead-hero {
+        font-size: 16px;
+    }
+
+    .section-title {
+        font-size: 28px;
+        line-height: 1.2;
+    }
+
+    .identity-box {
+        padding: 20px;
+    }
+
+    .service-icon {
+        width: 55px;
+        height: 55px;
+        font-size: 1.5rem;
+    }
+
+    .contact-title {
+        font-size: 26px;
+    }
+
+    .btn-contact,
+    .btn-submit {
+        width: 100%;
+    }
+
+    .footer-desc {
+        font-size: 0.8rem;
+    }
+}
